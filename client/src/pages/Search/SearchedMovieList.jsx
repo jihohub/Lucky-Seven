@@ -70,7 +70,6 @@ function SearchedMovieList({ keyword, setKeyword, location }) {
     const pageSize = 12;
     const dispatch = useDispatch();
     const { matchedMovieList, length } = useSelector((state) => state.SearchedMovieSlice);
-    const { minIndex, maxIndex } = useSelector((state) => state.PaginationSlice);
     const history = useHistory();
 
     const searchParams = new URLSearchParams(location.search);
@@ -80,8 +79,6 @@ function SearchedMovieList({ keyword, setKeyword, location }) {
         dispatch(setPagination({
             totalPage: length / pageSize,
             current: queryPage,
-            minIndex: (queryPage - 1) * pageSize,
-            maxIndex: queryPage * pageSize
         }));
         dispatch(setPage({ page: queryPage }));
         dispatch(getMovieListByTitle());
@@ -89,9 +86,7 @@ function SearchedMovieList({ keyword, setKeyword, location }) {
 
     const handlePageChange = (page) => {
         dispatch(setPagination({
-            current: page,
-            minIndex: (page - 1) * pageSize,
-            maxIndex: page * pageSize
+            current: page
         }));
         history.push(`/search?keyword=${keyword}&page=${page}`);
     };

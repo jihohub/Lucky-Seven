@@ -2,6 +2,7 @@
 import { css, jsx } from "@emotion/react";
 
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setSort, getMovieListByTitle } from "../../modules/SearchPage/SearchedMovieSlice";
@@ -27,9 +28,11 @@ const RadioGroup = css`
 function SearchResultHeader({ keyword }) {
     const dispatch = useDispatch();
     const [option, setOption] = useState("");
+    const history = useHistory();
 
     const onClickSortOption = (e) => {
         dispatch(setSort(e.target.value));
+        history.push(`/search?keyword=${keyword}&page=1`);
         dispatch(getMovieListByTitle());;
     };
 
